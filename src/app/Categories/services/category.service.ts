@@ -30,4 +30,16 @@ export class CategoryService {
         })
       );
   }
+
+  getCategoryById(id: string): Observable<ICategory> {
+    return this.http.get<ICategory>(`${this.baseUrl}categories/${id}.json`);
+  }
+
+  updateCategory(category: ICategory, id: string) {
+    return this.http.put(`${this.baseUrl}categories/${id}.json`, category);
+  }
+
+  deleteCategory(id: string) {
+    return this.http.delete(`${this.baseUrl}categories/${id}.json`);
+  }
 }
