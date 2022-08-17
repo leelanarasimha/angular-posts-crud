@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
     const password = this.registerForm.value.password;
     if (email && password) {
       this.authService.register(email, password).subscribe((data) => {
-        console.log(data);
+        this.authService.loggedInEvent.emit(true);
+        this.router.navigate(['/']);
       });
     }
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'src/app/services/message.service';
 import { ICategory } from '../../models/ICategory';
 import { CategoryService } from '../../services/category.service';
 
@@ -18,7 +19,8 @@ export class EditCategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class EditCategoryComponent implements OnInit {
     this.categoryService
       .updateCategory(this.categoryForm.value as ICategory, this.categoryId)
       .subscribe((data) => {
+        this.messageService.setSuccessMessage('category Updated Successfully');
         this.router.navigate(['/categories']);
       });
   }
